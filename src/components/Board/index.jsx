@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import wordList from '../../assets/wordList';
 
-const Board = ({ gameRestart, onGameRestart }) => {
+const Board = ({ gameRestart, onGameRestart, keyPressed }) => {
   const [board, setBoard] = useState(
     Array(6)
       .fill()
@@ -173,6 +173,7 @@ const Board = ({ gameRestart, onGameRestart }) => {
   const handleKeyPress = useCallback(
     (e) => {
       if (isWinner) return;
+      if (e.repeat) return;
       if (e.key === 'Backspace') {
         if (currentCol === 0) return;
         removeLetter();
@@ -189,11 +190,31 @@ const Board = ({ gameRestart, onGameRestart }) => {
     [currentCol, revealWord, getGuessWord, addLetter, isWinner, removeLetter],
   );
 
+  const handleKeyboardPress = useCallback(() => {
+    if (isWinner) return;
+    const { value } = keyPressed;
+    if (value === 'Backspace') {
+      if (currentCol === 0) return;
+      removeLetter();
+    }
+    if (value === 'Enter') {
+      const guess = getGuessWord();
+      revealWord(guess);
+    }
+    if (isLetter(value)) {
+      addLetter(value);
+    }
+  }, [keyPressed]);
+
   useEffect(() => {
     if (gameRestart) {
       resetGame();
     }
   }, [gameRestart, resetGame]);
+
+  useEffect(() => {
+    handleKeyboardPress();
+  }, [handleKeyboardPress]);
 
   useEffect(() => {
     const listener = (e) => handleKeyPress(e);

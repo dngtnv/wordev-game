@@ -31,5 +31,6 @@ const wordList = [
   'async',
   'await',
   'proxy',
+  'false',
 ];
 export default wordList;

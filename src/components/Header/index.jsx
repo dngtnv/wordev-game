@@ -3,7 +3,7 @@ const Header = ({ onRestart }) => {
     onRestart();
     // Remove focus from the button after clicking it
     e.currentTarget.blur();
-  }
+  };
   return (
     <header className='relative flex h-16 items-center justify-center border-b-[1px] border-b-main-gray bg-primary drop-shadow'>
       <h1 className='text-3xl font-bold text-white'>Wordev</h1>
@@ -28,7 +28,7 @@ const Header = ({ onRestart }) => {
           onClick={handleRestartClick}
           className='mr-5 rounded-2xl border-b-4 border-orange-700 bg-orange-500 px-4 py-2 font-bold text-white hover:border-orange-500 hover:bg-orange-400'
         >
-          Restart game
+          Restart Game
         </button>
       </div>
     </header>

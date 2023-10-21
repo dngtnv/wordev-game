@@ -5,6 +5,7 @@ import Keyboard from './components/Keyboard';
 
 function App() {
   const [restart, setRestart] = useState(false);
+  const [key, setKey] = useState({});
 
   const restartGame = () => {
     setRestart(true);
@@ -13,12 +14,20 @@ function App() {
     setRestart(false);
   };
 
+  const handleKeyboardClick = (key) => {
+    setKey({ value: key });
+  };
+
   return (
     <div className='min-h-screen w-full bg-primary'>
       <Header onRestart={restartGame} />
-      <main className='flex flex-col place-content-center'>
-        <Board gameRestart={restart} onGameRestart={handleGameRestart} />
-        <Keyboard />
+      <main className='mx-auto flex w-full max-w-[500px] flex-col place-content-center'>
+        <Board
+          gameRestart={restart}
+          onGameRestart={handleGameRestart}
+          keyPressed={key}
+        />
+        <Keyboard onKeyboardClick={handleKeyboardClick} />
       </main>
     </div>
   );
