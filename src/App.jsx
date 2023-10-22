@@ -6,15 +6,25 @@ import Keyboard from './components/Keyboard';
 function App() {
   const [restart, setRestart] = useState(false);
   const [key, setKey] = useState({});
+  const [keyStatus, setKeyStatus] = useState([]);
 
   const restartGame = () => {
+    setKeyStatus([]);
     setRestart(true);
   };
   const handleGameRestart = () => {
     setRestart(false);
   };
 
-  const handleKeyboardClick = (key) => {
+  const handleKeyStatus = (keyStatus) => {
+    setKeyStatus((prevKeyStatus) => {
+      const newKeyStatus = [...prevKeyStatus];
+      newKeyStatus.push(keyStatus);
+      return newKeyStatus;
+    });
+  };
+
+  const handleKeyboardClick = async (key) => {
     setKey({ value: key });
   };
 
@@ -26,8 +36,9 @@ function App() {
           gameRestart={restart}
           onGameRestart={handleGameRestart}
           keyPressed={key}
+          onKeyStatus={handleKeyStatus}
         />
-        <Keyboard onKeyboardClick={handleKeyboardClick} />
+        <Keyboard onKeyboardClick={handleKeyboardClick} keyStatus={keyStatus} />
       </main>
     </div>
   );

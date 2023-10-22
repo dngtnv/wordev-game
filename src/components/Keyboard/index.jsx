@@ -1,4 +1,8 @@
-const Keyboard = ({ onKeyboardClick }) => {
+import { useEffect, useState } from 'react';
+
+const Keyboard = ({ onKeyboardClick, keyStatus }) => {
+  const [buttonStyles, setButtonStyles] = useState({});
+
   const bpSvg = (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -30,13 +34,39 @@ const Keyboard = ({ onKeyboardClick }) => {
     e.currentTarget.blur();
   };
 
+  const getKeyStatus = (key, keyArr) => {
+    const foundKey = keyArr.find((item) => item.letter.toLowerCase() === key);
+    if (foundKey && foundKey.status) {
+      return foundKey.status;
+    }
+    return foundKey ? foundKey.status : 'bg-main-blue'; // Assuming default className for buttons with no status
+  };
+
+  useEffect(() => {
+    // Update button styles whenever keyStatus changes
+    const updatedButtonStyles = {};
+    [...firstLayerKeys, ...secondLayerKeys, ...thirdLayerKeys].forEach(
+      (key) => {
+        updatedButtonStyles[key] = getKeyStatus(key, keyStatus);
+      },
+    );
+    setButtonStyles(updatedButtonStyles);
+  }, [keyStatus]);
+
   return (
     <section className='flex h-[200px] select-none flex-col items-center text-white'>
       <div className='mb-2 flex w-full gap-[6px]'>
         {firstLayerKeys.map((key, index) => (
           <button
             key={index}
-            className='flex h-[58px] flex-1 items-center justify-center rounded-lg bg-main-blue text-[1.25em] font-bold uppercase'
+            className={`${buttonStyles[key] === 'absent'
+                ? 'bg-main-gray'
+                : buttonStyles[key] === 'present'
+                  ? 'bg-main-yellow'
+                  : buttonStyles[key] === 'correct'
+                    ? 'bg-main-green'
+                    : 'bg-main-blue'
+              } flex h-[58px] flex-1 items-center justify-center rounded-lg text-[1.25em] font-bold uppercase`}
             data-key={key}
             onClick={onKeyboardClickHandler}
           >
@@ -48,7 +78,14 @@ const Keyboard = ({ onKeyboardClick }) => {
         {secondLayerKeys.map((key, index) => (
           <button
             key={index}
-            className='flex h-[58px] flex-1 items-center justify-center rounded-lg bg-main-blue text-[1.25em] font-bold uppercase'
+            className={`${buttonStyles[key] === 'absent'
+                ? 'bg-main-gray'
+                : buttonStyles[key] === 'present'
+                  ? 'bg-main-yellow'
+                  : buttonStyles[key] === 'correct'
+                    ? 'bg-main-green'
+                    : 'bg-main-blue'
+              } flex h-[58px] flex-1 items-center justify-center rounded-lg bg-main-blue text-[1.25em] font-bold uppercase`}
             data-key={key}
             onClick={onKeyboardClickHandler}
           >
@@ -63,6 +100,13 @@ const Keyboard = ({ onKeyboardClick }) => {
             className={`${index === 0 || index === 8
                 ? 'flex-[1.5] text-[12px]'
                 : 'flex-1 text-[1.25em]'
+              } ${buttonStyles[key] === 'absent'
+                ? 'bg-main-gray'
+                : buttonStyles[key] === 'present'
+                  ? 'bg-main-yellow'
+                  : buttonStyles[key] === 'correct'
+                    ? 'bg-main-green'
+                    : 'bg-main-blue'
               } flex h-[58px] items-center justify-center rounded-lg bg-main-blue font-bold uppercase`}
             data-key={index === 8 ? 'Backspace' : key}
             onClick={onKeyboardClickHandler}

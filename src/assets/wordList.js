@@ -32,5 +32,17 @@ const wordList = [
   'await',
   'proxy',
   'false',
+  'fonts',
+  'match',
+  'write',
+  'learn',
+  'while',
+  'break',
+  'catch',
+  'throw',
+  'agile',
+  'model',
+  'check',
+  'theme',
 ];
 export default wordList;

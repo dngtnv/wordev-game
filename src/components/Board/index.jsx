@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import wordList from '../../assets/wordList';
 
-const Board = ({ gameRestart, onGameRestart, keyPressed }) => {
+const Board = ({ gameRestart, onGameRestart, keyPressed, onKeyStatus }) => {
   const [board, setBoard] = useState(
     Array(6)
       .fill()
@@ -11,6 +11,7 @@ const Board = ({ gameRestart, onGameRestart, keyPressed }) => {
     const randomIndex = Math.floor(Math.random() * wordList.length);
     return wordList[randomIndex].toUpperCase();
   }, []);
+  const easterEgg = 'TOKYO';
   const [secretWord, setSecretWord] = useState(getSecretWord());
   const [isWinner, setIsWinner] = useState(false);
   const [currentRow, setCurrentRow] = useState(0);
@@ -102,7 +103,7 @@ const Board = ({ gameRestart, onGameRestart, keyPressed }) => {
         return;
       }
 
-      const processTile = (tile, letter, index) => {
+      const processTile = async (tile, letter, index) => {
         const newTileStates = [...tileStates];
         setTimeout(
           () => {
@@ -130,6 +131,16 @@ const Board = ({ gameRestart, onGameRestart, keyPressed }) => {
         tile.classList.remove('animate-pop');
         tile.classList.add('animate-flip');
         tile.style.animationDelay = `${index * animationDuration}ms`;
+
+        // Simulate asynchronous operation using setTimeout
+        await new Promise((resolve) =>
+          setTimeout(resolve, 5 * animationDuration),
+        );
+        // store the letter with its status
+        onKeyStatus({
+          letter,
+          status: tileStates[currentRow][index],
+        });
       };
 
       for (let i = 0; i < 5; i++) {
@@ -145,7 +156,7 @@ const Board = ({ gameRestart, onGameRestart, keyPressed }) => {
         setCurrentRow((prevRow) => prevRow + 1);
         setCurrentCol(0);
 
-        const bingo = secretWord === guessWord;
+        const bingo = secretWord === guessWord || guessWord === easterEgg;
         const isLoser = currentRow === 5 && !bingo;
 
         removeAnimationDelay();
