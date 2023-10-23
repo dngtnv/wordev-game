@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import wordList from '../../assets/wordList';
+import Confetti from '../Confetti/index.js';
 
 const Board = ({ gameRestart, onGameRestart, keyPressed, onKeyStatus }) => {
   const [board, setBoard] = useState(
@@ -156,12 +157,13 @@ const Board = ({ gameRestart, onGameRestart, keyPressed, onKeyStatus }) => {
         setCurrentRow((prevRow) => prevRow + 1);
         setCurrentCol(0);
 
-        const bingo = secretWord === guessWord || guessWord === easterEgg;
-        const isLoser = currentRow === 5 && !bingo;
+        const win = secretWord === guessWord;
+        const bingo = easterEgg === guessWord;
+        const isLoser = currentRow === 5 && !win;
 
         removeAnimationDelay();
 
-        if (bingo) {
+        if (win) {
           for (let i = 0; i < 5; i++) {
             const tile = document.querySelector(
               `[aria-label="Row ${currentRow + 1}"] > div:nth-child(${i + 1
@@ -173,6 +175,11 @@ const Board = ({ gameRestart, onGameRestart, keyPressed, onKeyStatus }) => {
           }
           setIsWinner(true);
         }
+        if (bingo) {
+          console.log('You found the easter egg! but you lost one turn 🤣');
+          Confetti();
+        }
+
         if (isLoser) {
           console.log('You lose! secret word is: ', secretWord);
         }
