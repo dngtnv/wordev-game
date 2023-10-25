@@ -2,7 +2,14 @@ import { useCallback, useEffect, useState } from 'react';
 import wordList from '../../assets/wordList';
 import Confetti from '../Confetti/index.js';
 
-const Board = ({ gameRestart, onGameRestart, keyPressed, onKeyStatus }) => {
+const Board = ({
+  gameRestart,
+  onGameRestart,
+  keyPressed,
+  onKeyStatus,
+  onModalOpen,
+  onAlertMessage,
+}) => {
   const [board, setBoard] = useState(
     Array(6)
       .fill()
@@ -15,6 +22,7 @@ const Board = ({ gameRestart, onGameRestart, keyPressed, onKeyStatus }) => {
   const easterEgg = 'TOKYO';
   const [secretWord, setSecretWord] = useState(getSecretWord());
   const [isWinner, setIsWinner] = useState(false);
+  const [isLoser, setIsLoser] = useState(false);
   const [currentRow, setCurrentRow] = useState(0);
   const [currentCol, setCurrentCol] = useState(0);
   const tileLabels = ['1st', '2nd', '3rd', '4th', '5th'];
@@ -37,6 +45,7 @@ const Board = ({ gameRestart, onGameRestart, keyPressed, onKeyStatus }) => {
     );
     setSecretWord(getSecretWord());
     setIsWinner(false);
+    setIsLoser(false);
     setCurrentRow(0);
     setCurrentCol(0);
     onGameRestart();
@@ -98,6 +107,7 @@ const Board = ({ gameRestart, onGameRestart, keyPressed, onKeyStatus }) => {
           `[aria-label="Row ${currentRow + 1}"]`,
         );
         row.classList.add('animate-shake');
+        onAlertMessage('Invalid word!');
         setTimeout(() => {
           row.classList.remove('animate-shake');
         }, 600);
@@ -174,14 +184,17 @@ const Board = ({ gameRestart, onGameRestart, keyPressed, onKeyStatus }) => {
             tile.style.animationDelay = `${i * 100}ms`;
           }
           setIsWinner(true);
+          onAlertMessage('You win! 👏');
+          setTimeout(removeAnimationDelay, 1000);
         }
         if (bingo) {
-          console.log('You found the easter egg! but you lost one turn 🤣');
+          onAlertMessage('You found the easter egg! 🎉');
           Confetti();
         }
 
         if (isLoser) {
-          console.log('You lose! secret word is: ', secretWord);
+          setIsLoser(true);
+          onAlertMessage(`You lose! 😢 secret word is: ${secretWord}`);
         }
       }, 1700);
     },
@@ -191,6 +204,7 @@ const Board = ({ gameRestart, onGameRestart, keyPressed, onKeyStatus }) => {
   const handleKeyPress = useCallback(
     (e) => {
       if (isWinner) return;
+      if (isLoser) return;
       if (e.repeat) return;
       if (e.key === 'Backspace') {
         if (currentCol === 0) return;
@@ -209,6 +223,7 @@ const Board = ({ gameRestart, onGameRestart, keyPressed, onKeyStatus }) => {
   );
 
   const handleKeyboardPress = useCallback(() => {
+    if (isLoser) return;
     if (isWinner) return;
     const { value } = keyPressed;
     if (value === 'Backspace') {
@@ -235,13 +250,14 @@ const Board = ({ gameRestart, onGameRestart, keyPressed, onKeyStatus }) => {
   }, [handleKeyboardPress]);
 
   useEffect(() => {
+    if (onModalOpen) return;
     const listener = (e) => handleKeyPress(e);
     window.addEventListener('keydown', listener);
     // Clean up all event listeners when the component unmounts
     return () => {
       window.removeEventListener('keydown', listener);
     };
-  }, [handleKeyPress, currentCol, currentRow]);
+  }, [handleKeyPress, currentCol, currentRow, onModalOpen]);
 
   return (
     <section className='flex items-center justify-center'>

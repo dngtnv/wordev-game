@@ -1,4 +1,4 @@
-const Header = ({ onRestart }) => {
+const Header = ({ onModalOpen, onRestart }) => {
   const handleRestartClick = (e) => {
     onRestart();
     // Remove focus from the button after clicking it
@@ -6,9 +6,9 @@ const Header = ({ onRestart }) => {
   };
   return (
     <header className='relative flex h-16 items-center justify-center border-b-[1px] border-b-main-gray bg-primary drop-shadow'>
-      <h1 className='text-3xl font-bold text-white'>Wordev</h1>
+      <h1 className='font-berkshire text-4xl text-white'>Wordev</h1>
       <div className='absolute right-0 flex items-center justify-center gap-4'>
-        <button className='text-main-light-orange'>
+        <button onClick={onModalOpen} className='text-main-light-orange'>
           <svg
             xmlns='http://www.w3.org/2000/svg'
             fill='none'
