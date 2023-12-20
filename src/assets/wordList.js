@@ -44,5 +44,9 @@ const wordList = [
   'model',
   'check',
   'theme',
+  'cisco',
+  'coder',
+  'build',
+  'tools',
 ];
 export default wordList;
