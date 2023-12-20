@@ -43,7 +43,7 @@ function App() {
     });
   };
 
-  const handleKeyboardClick = async (key) => {
+  const handleKeyboardClick = (key) => {
     setKey({ value: key });
   };
 
