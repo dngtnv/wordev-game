@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect } from "react";
 
 const Toast = ({ alerts, setAlerts }) => {
   useEffect(() => {
@@ -20,11 +20,11 @@ const Toast = ({ alerts, setAlerts }) => {
   }, [alerts, setAlerts]);
 
   return (
-    <div className='pointer-events-none absolute left-1/2 top-14 flex w-fit -translate-x-1/2 translate-y-0 flex-col gap-3'>
+    <div className="pointer-events-none absolute left-1/2 top-14 flex w-fit -translate-x-1/2 translate-y-0 flex-col gap-3">
       {alerts.map((alert, index) => (
         <div
           key={index}
-          className='rounded-[4px] bg-white p-3 text-[14px] font-bold'
+          className="rounded-[4px] bg-white p-3 text-[14px] font-bold"
         >
           {alert.message}
         </div>

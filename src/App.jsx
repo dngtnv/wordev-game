@@ -1,9 +1,9 @@
-import { useState } from 'react';
-import Board from './components/Board';
-import Header from './components/Header';
-import Keyboard from './components/Keyboard';
-import Modal from './components/Modal';
-import Toast from './components/Toast';
+import { useCallback, useState } from "react";
+import Board from "./components/Board";
+import Header from "./components/Header";
+import Keyboard from "./components/Keyboard";
+import Modal from "./components/Modal";
+import Toast from "./components/Toast";
 
 function App() {
   const [restart, setRestart] = useState(false);
@@ -12,45 +12,43 @@ function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [alertMessage, setAlertMessage] = useState([]);
 
-  const handleAlertMessage = (message) => {
+  const handleAlertMessage = useCallback((message) => {
     setAlertMessage((prevAlertMessage) => {
       const newAlertMessage = [...prevAlertMessage];
       newAlertMessage.push({ message: message });
       return newAlertMessage;
     });
-  };
+  }, []);
 
-  const openModal = () => {
+  const openModal = useCallback(() => {
     setIsModalOpen(true);
-  };
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
+  }, []);
 
-  const restartGame = () => {
+  const closeModal = useCallback(() => {
+    setIsModalOpen(false);
+  }, []);
+
+  const restartGame = useCallback(() => {
     setKeyStatus([]);
     setRestart(true);
-  };
-  const handleGameRestart = () => {
+  }, []);
+
+  const handleGameRestart = useCallback(() => {
     setRestart(false);
-  };
+  }, []);
 
-  const handleKeyStatus = (keyStatus) => {
-    setKeyStatus((prevKeyStatus) => {
-      const newKeyStatus = [...prevKeyStatus];
-      newKeyStatus.push(keyStatus);
-      return newKeyStatus;
-    });
-  };
+  const handleKeyStatus = useCallback((keyStatus) => {
+    setKeyStatus((prevKeyStatus) => [...prevKeyStatus, keyStatus]);
+  }, []);
 
-  const handleKeyboardClick = (key) => {
+  const handleKeyboardClick = useCallback((key) => {
     setKey({ value: key });
-  };
+  }, []);
 
   return (
-    <div className='min-h-screen w-full bg-primary'>
+    <div className="min-h-screen w-full bg-primary">
       <Header onModalOpen={openModal} onRestart={restartGame} />
-      <main className='mx-auto flex w-full max-w-[500px] flex-col place-content-center'>
+      <main className="mx-auto flex w-full max-w-[500px] flex-col place-content-center">
         <Board
           onModalOpen={isModalOpen}
           gameRestart={restart}
