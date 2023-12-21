@@ -1,4 +1,4 @@
-import { memo, useEffect, useState } from "react";
+import { memo, useEffect, useState } from 'react';
 
 const bpSvg = (
   <svg
@@ -16,19 +16,19 @@ const bpSvg = (
     />
   </svg>
 );
-const firstLayerKeys = ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"];
-const secondLayerKeys = ["a", "s", "d", "f", "g", "h", "j", "k", "l"];
-const thirdLayerKeys = ["Enter", "z", "x", "c", "v", "b", "n", "m", bpSvg];
+const firstLayerKeys = ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'];
+const secondLayerKeys = ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'];
+const thirdLayerKeys = ['Enter', 'z', 'x', 'c', 'v', 'b', 'n', 'm', bpSvg];
 
 const Keyboard = memo(function Keyboard({ onKeyboardClick, keyStatus }) {
   const [buttonStyles, setButtonStyles] = useState({});
 
   const onKeyboardClickHandler = (e) => {
-    if (e.target.tagName === "svg" || e.target.tagName === "path") {
-      const btn = e.target.closest("button").getAttribute("data-key");
+    if (e.target.tagName === 'svg' || e.target.tagName === 'path') {
+      const btn = e.target.closest('button').getAttribute('data-key');
       onKeyboardClick(btn);
     } else {
-      onKeyboardClick(e.target.getAttribute("data-key"));
+      onKeyboardClick(e.target.getAttribute('data-key'));
     }
     e.currentTarget.blur();
   };
@@ -38,7 +38,7 @@ const Keyboard = memo(function Keyboard({ onKeyboardClick, keyStatus }) {
     if (foundKey && foundKey.status) {
       return foundKey.status;
     }
-    return foundKey ? foundKey.status : "bg-main-blue"; // Assuming default className for buttons with no status
+    return foundKey ? foundKey.status : 'bg-main-blue'; // Assuming default className for buttons with no status
   };
 
   useEffect(() => {
@@ -59,13 +59,13 @@ const Keyboard = memo(function Keyboard({ onKeyboardClick, keyStatus }) {
           <button
             key={index}
             className={`${
-              buttonStyles[key] === "absent"
-                ? "bg-main-gray"
-                : buttonStyles[key] === "present"
-                ? "bg-main-yellow"
-                : buttonStyles[key] === "correct"
-                ? "bg-main-green"
-                : "bg-main-blue"
+              buttonStyles[key] === 'absent'
+                ? 'bg-main-gray'
+                : buttonStyles[key] === 'present'
+                ? 'bg-main-yellow'
+                : buttonStyles[key] === 'correct'
+                ? 'bg-main-green'
+                : 'bg-main-blue'
             } flex h-[58px] flex-1 items-center justify-center rounded-lg text-[1.25em] font-bold uppercase`}
             data-key={key}
             onClick={onKeyboardClickHandler}
@@ -79,13 +79,13 @@ const Keyboard = memo(function Keyboard({ onKeyboardClick, keyStatus }) {
           <button
             key={index}
             className={`${
-              buttonStyles[key] === "absent"
-                ? "bg-main-gray"
-                : buttonStyles[key] === "present"
-                ? "bg-main-yellow"
-                : buttonStyles[key] === "correct"
-                ? "bg-main-green"
-                : "bg-main-blue"
+              buttonStyles[key] === 'absent'
+                ? 'bg-main-gray'
+                : buttonStyles[key] === 'present'
+                ? 'bg-main-yellow'
+                : buttonStyles[key] === 'correct'
+                ? 'bg-main-green'
+                : 'bg-main-blue'
             } flex h-[58px] flex-1 items-center justify-center rounded-lg bg-main-blue text-[1.25em] font-bold uppercase`}
             data-key={key}
             onClick={onKeyboardClickHandler}
@@ -100,18 +100,18 @@ const Keyboard = memo(function Keyboard({ onKeyboardClick, keyStatus }) {
             key={index}
             className={`${
               index === 0 || index === 8
-                ? "flex-[1.5] text-[12px]"
-                : "flex-1 text-[1.25em]"
+                ? 'flex-[1.5] text-[12px]'
+                : 'flex-1 text-[1.25em]'
             } ${
-              buttonStyles[key] === "absent"
-                ? "bg-main-gray"
-                : buttonStyles[key] === "present"
-                ? "bg-main-yellow"
-                : buttonStyles[key] === "correct"
-                ? "bg-main-green"
-                : "bg-main-blue"
+              buttonStyles[key] === 'absent'
+                ? 'bg-main-gray'
+                : buttonStyles[key] === 'present'
+                ? 'bg-main-yellow'
+                : buttonStyles[key] === 'correct'
+                ? 'bg-main-green'
+                : 'bg-main-blue'
             } flex h-[58px] items-center justify-center rounded-lg bg-main-blue font-bold uppercase`}
-            data-key={index === 8 ? "Backspace" : key}
+            data-key={index === 8 ? 'Backspace' : key}
             onClick={onKeyboardClickHandler}
           >
             {key}

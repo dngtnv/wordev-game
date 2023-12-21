@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo } from 'react';
 
 const Header = memo(function Header({ onModalOpen, onRestart }) {
   const handleRestartClick = (e) => {

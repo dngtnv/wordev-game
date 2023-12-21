@@ -1,6 +1,6 @@
 const Modal = ({ isOpen, onClose }) => {
-  const modalClasses = isOpen ? "block" : "hidden";
-  const modalAnimation = isOpen ? "animate-slideIn" : "animate-slideOut";
+  const modalClasses = isOpen ? 'block' : 'hidden';
+  const modalAnimation = isOpen ? 'animate-slideIn' : 'animate-slideOut';
 
   return (
     <div

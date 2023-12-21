@@ -1,9 +1,9 @@
-import { useCallback, useState } from "react";
-import Board from "./components/Board";
-import Header from "./components/Header";
-import Keyboard from "./components/Keyboard";
-import Modal from "./components/Modal";
-import Toast from "./components/Toast";
+import { useCallback, useState } from 'react';
+import Board from './components/Board';
+import Header from './components/Header';
+import Keyboard from './components/Keyboard';
+import Modal from './components/Modal';
+import Toast from './components/Toast';
 
 function App() {
   const [restart, setRestart] = useState(false);

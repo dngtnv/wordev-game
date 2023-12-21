@@ -94,7 +94,8 @@ const Board = ({
       const animationDuration = 300; // ms
       const removeAnimationDelay = () => {
         const tiles = document.querySelectorAll(
-          `[aria-label="Row ${currentRow + 1
+          `[aria-label="Row ${
+            currentRow + 1
           }"] > div > div[style*="animation-delay"]`,
         );
         tiles.forEach((tile) => {
@@ -156,7 +157,8 @@ const Board = ({
 
       for (let i = 0; i < 5; i++) {
         const tile = document.querySelector(
-          `[aria-label="Row ${currentRow + 1}"] > div:nth-child(${i + 1
+          `[aria-label="Row ${currentRow + 1}"] > div:nth-child(${
+            i + 1
           }) > div`,
         );
         const letter = tile.textContent;
@@ -176,7 +178,8 @@ const Board = ({
         if (win) {
           for (let i = 0; i < 5; i++) {
             const tile = document.querySelector(
-              `[aria-label="Row ${currentRow + 1}"] > div:nth-child(${i + 1
+              `[aria-label="Row ${currentRow + 1}"] > div:nth-child(${
+                i + 1
               }) > div`,
             );
             tile.classList.remove('animate-flip');
@@ -260,21 +263,23 @@ const Board = ({
   }, [handleKeyPress, currentCol, currentRow, onModalOpen]);
 
   return (
-    <section className='flex items-center justify-center'>
-      <div className='grid h-[360px] w-[300px] grid-rows-6 gap-[5px] p-[10px]'>
+    <section className="flex items-center justify-center">
+      <div className="grid h-[360px] w-[300px] grid-rows-6 gap-[5px] p-[10px]">
         {board.map((row, i) => (
           <div
-            className='grid grid-cols-5 gap-[5px]'
+            className="grid grid-cols-5 gap-[5px]"
             key={i}
             aria-label={`Row ${i + 1}`}
           >
             {row.map((letter, j) => (
-              <div className='bg-primary' key={j}>
+              <div className="bg-primary" key={j}>
                 <div
-                  className={`inline-flex h-full w-full select-none items-center justify-center border-2 border-main-gray align-middle text-[2rem] font-bold uppercase leading-[1] text-white ${letter !== '' ? 'animate-pop border-main-light-gray' : ''
-                    }`}
-                  aria-label={`${tileLabels[j]} letter, ${letter === '' ? '' : letter
-                    }, ${tileStates[i][j]}`}
+                  className={`inline-flex h-full w-full select-none items-center justify-center border-2 border-main-gray align-middle text-[2rem] font-bold uppercase leading-[1] text-white ${
+                    letter !== '' ? 'animate-pop border-main-light-gray' : ''
+                  }`}
+                  aria-label={`${tileLabels[j]} letter, ${
+                    letter === '' ? '' : letter
+                  }, ${tileStates[i][j]}`}
                   data-state={tileStates[i][j]}
                 >
                   {letter}
